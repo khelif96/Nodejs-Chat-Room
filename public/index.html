@@ -14,8 +14,12 @@
 
     <script type="text/javascript">
   		var socket = io.connect();
+      var tempMessage = " ";
       socket.on('message', function(data){
         console.log("Message Recieved" + data.value);
+        tempMessage = data.value;
+        document.getElementById("MessageBox").innerHTML =
+        document.getElementById("MessageBox").innerHTML + '<br><span class="message">' + tempMessage + '</span>';
       });
 
       function sendMessage(){
