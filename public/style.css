@@ -1,0 +1,42 @@
+body{
+  margin:auto 0px;
+  font-family: arial;
+}
+.header{
+  width:100%;
+  background-color: #3169D1;
+  text-align: center;
+  font-size: 40px;
+  color: #F2D435;
+  position:fixed;
+}
+
+#MessageBox{
+  padding-top: 100px;
+}
+input[type="text"]{
+  margin:0;
+  width:95%;
+  height:50px;
+}
+input[type="button"]{
+  width:4%;
+  height:50px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="text"].focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

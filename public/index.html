@@ -6,24 +6,35 @@
   </head>
   <body>
     <div class="header">Chat Room</div>
-    <input type="text" id="sendMessage">
-    <input type="button" value="submit" onclick="sendMessage()">
+
+    <div class="logIn">
     <div id="MessageBox">
       <span class="message"> </span>
     </div>
+  <div class="footer">
+      <input type="text"  id="sendMessage">
+      <input type="button" value="submit" id="submit" onclick="sendMessage()">
+  </div>
 
     <script type="text/javascript">
-  		var socket = io.connect();
-      var tempMessage = " ";
-      socket.on('message', function(data){
-        console.log("Message Recieved" + data.value);
-        tempMessage = data.value;
-        document.getElementById("MessageBox").innerHTML =
-        document.getElementById("MessageBox").innerHTML + '<br><span class="message">' + tempMessage + '</span>';
-      });
+      var  submit = document.getElementById("submit");
+      var txt = document.getElementById("sendMessage");
 
-      function sendMessage(){
-        console.log("Message Sent");
-        socket.emit('message', {value: document.getElementById('sendMessage').value});
-      }
+      txt.addEventListener("keypress", function() {
+        if (event.keyCode == 13) submit.click();
+      });
+    		var socket = io.connect();
+        var tempMessage = " ";
+        socket.on('message', function(data){
+          console.log("Message Recieved" + data.value);
+          tempMessage = data.value;
+          document.getElementById("MessageBox").innerHTML =
+          document.getElementById("MessageBox").innerHTML + '<br><span style="color:red" class="message">' + tempMessage + '</span>';
+        });
+
+        function sendMessage(){
+          console.log("Message Sent");
+          socket.emit('message', {value: document.getElementById('sendMessage').value});
+        }
     </script>
+  </body>
