@@ -30,9 +30,9 @@ io.sockets.on('connection', function(socket){
     io.sockets.emit('message', {value: newMessage});
 
   })
+  socket.on("disconnect", function() {
+    // request closed unexpectedly
+    console.log("CLient Disconnect");
+  });
 
-});
-io.sockets.on("disconnect", function() {
-  // request closed unexpectedly
-  console.log("CLient Disconnect");
 });
