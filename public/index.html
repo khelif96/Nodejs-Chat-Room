@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Node Chat Room</title>
+    <script src="socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="header">Chat Room</div>
+    <input type="text" id="sendMessage">
+    <input type="button" value="submit" onclick="sendMessage()">
+    <div id="MessageBox">
+      <span class="message"> </span>
+    </div>
+
+    <script type="text/javascript">
+  		var socket = io.connect();
+      socket.on('message', function(data){
+        console.log("Message Recieved" + data.value);
+      });
+
+      function sendMessage(){
+        console.log("Message Sent");
+        socket.emit('message', {value: document.getElementById('sendMessage').value});
+      }
+    </script>
