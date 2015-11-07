@@ -21,21 +21,27 @@
   </div>
 
     <script type="text/javascript">
-      var lastSent = "";
-      var  submit = document.getElementById("submit");
+      var lastSent = ""; // Variable to store the last message sent
+      var submit = document.getElementById("submit");
       var txt = document.getElementById("sendMessage");
 
+      // Send the message in the event the enter button is clicked
       txt.addEventListener("keypress", function() {
         if (event.keyCode == 13) submit.click();
       });
 
-    		var socket = io.connect();
-        var tempMessage = "";
 
+    		var socket = io.connect(); // Connect to the socket client
+        var tempMessage = ""; // Variable to store the value of the message recieved
+
+        // When a message is recieved
         socket.on('message', function(data){
           console.log("Message Recieved" + data.value);
           tempMessage = data.value;
+          // Check if the last message recieved was sent by you or not
+          // In order to prevent duplicate messages appearing
           if(tempMessage != lastSent){
+            // Add the new message to the screen
             document.getElementById("MessageBox").innerHTML =
             document.getElementById("MessageBox").innerHTML + '<br><span class="message" id="recievedMessage">' + tempMessage + '</span>';
           }
