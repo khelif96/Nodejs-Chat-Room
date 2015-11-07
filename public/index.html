@@ -3,6 +3,7 @@
     <title>Node Chat Room</title>
     <script src="socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="style.css">
+
   </head>
   <body>
     <div class="header">Chat Room</div>
@@ -23,6 +24,7 @@
       txt.addEventListener("keypress", function() {
         if (event.keyCode == 13) submit.click();
       });
+
     		var socket = io.connect();
         var tempMessage = " ";
         socket.on('message', function(data){
@@ -34,7 +36,11 @@
 
         function sendMessage(){
           console.log("Message Sent");
-          socket.emit('message', {value: document.getElementById('sendMessage').value});
+          document.getElementById("MessageBox").innerHTML + '<br><span style="color:green" class="message">' + document.getElementById('sendMessage').value + '</span>';
+          socket.emit('message', {value: document.getElementById('sendMessage').value, title: "User1"});
+
+          document.getElementById('sendMessage').value = "";
+
         }
     </script>
   </body>

@@ -9,8 +9,6 @@ app.use(express.static('public'));
 var messages = [];
 var newMessage = "";
 
-console.log("Server Started on port 3000")
-
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
   console.log('Server started on '+ add + ':3000');
 })
@@ -18,15 +16,16 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 io.sockets.on('connection', function(socket){
   console.log("Client Connected");
 
-  socket.emit('message', {value : newMessage});
-
+  for(i = 0; i<messages.length; i++){
+    socket.emit('message', {value : messages[i]});
+  }
   socket.on('message', function(data){
     console.log("Message recieved " + data.value);
     newMessage = data.value;
 
     var buf = new Buffer(1);
     buf.writeUInt8(newMessage,0);
-
+    messages.push(newMessage);
     io.sockets.emit('message', {value: newMessage});
 
   })

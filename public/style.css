@@ -13,7 +13,14 @@ body{
 
 #MessageBox{
   padding-top: 100px;
+  width:100%;
+  padding-left: 80px;
 }
+.message{
+    border: solid 1px #dcdcdc;
+    font-size: 25px;
+}
+
 input[type="text"]{
   margin:0;
   width:95%;
