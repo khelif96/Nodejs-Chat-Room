@@ -19,12 +19,12 @@ io.sockets.on('connection', function(socket){
   for(i = 0; i<messages.length; i++){
     socket.emit('message', {value : messages[i]});
   }
+
   socket.on('message', function(data){
-    console.log("Message recieved " + data.value);
     newMessage = data.value;
 
-    var buf = new Buffer(1);
-    buf.writeUInt8(newMessage,0);
+    // var buf = new Buffer(1);
+    // buf.writeUInt8(newMessage,0);
     messages.push(newMessage);
     io.sockets.emit('message', {value: newMessage});
 

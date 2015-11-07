@@ -6,18 +6,22 @@
 
   </head>
   <body>
-    <div class="header">Chat Room</div>
+    <div class="header">
+      Chat Room
+    </div>
 
     <div class="logIn">
+      <center>
     <div id="MessageBox">
-      <span class="message"> </span>
     </div>
+  </center>
   <div class="footer">
       <input type="text"  id="sendMessage">
       <input type="button" value="submit" id="submit" onclick="sendMessage()">
   </div>
 
     <script type="text/javascript">
+      var lastSent = "";
       var  submit = document.getElementById("submit");
       var txt = document.getElementById("sendMessage");
 
@@ -26,19 +30,22 @@
       });
 
     		var socket = io.connect();
-        var tempMessage = " ";
+        var tempMessage = "";
+
         socket.on('message', function(data){
           console.log("Message Recieved" + data.value);
           tempMessage = data.value;
-          document.getElementById("MessageBox").innerHTML =
-          document.getElementById("MessageBox").innerHTML + '<br><span style="color:red" class="message">' + tempMessage + '</span>';
+          if(tempMessage != lastSent){
+            document.getElementById("MessageBox").innerHTML =
+            document.getElementById("MessageBox").innerHTML + '<br><span class="message" id="recievedMessage">' + tempMessage + '</span>';
+          }
         });
 
         function sendMessage(){
-          console.log("Message Sent");
-          document.getElementById("MessageBox").innerHTML + '<br><span style="color:green" class="message">' + document.getElementById('sendMessage').value + '</span>';
-          socket.emit('message', {value: document.getElementById('sendMessage').value, title: "User1"});
-
+          sendingMessage = document.getElementById('sendMessage').value;
+          document.getElementById("MessageBox").innerHTML = document.getElementById("MessageBox").innerHTML + '<br><span class="message" id="sentMessage">' + document.getElementById('sendMessage').value + '</span>';
+          lastSent = sendingMessage;
+          socket.emit('message', {value: document.getElementById('sendMessage').value});
           document.getElementById('sendMessage').value = "";
 
         }

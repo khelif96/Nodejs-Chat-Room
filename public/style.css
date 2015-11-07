@@ -1,6 +1,10 @@
 body{
-  margin:auto 0px;
+  margin: 0 auto;
   font-family: arial;
+  background-color: #363A3D;
+  max-width: 100%;
+  overflow-x: hidden;
+
 }
 .header{
   width:100%;
@@ -13,15 +17,31 @@ body{
 
 #MessageBox{
   padding-top: 100px;
-  width:100%;
+  /*width:100%;*/
   padding-left: 80px;
+  padding-right: 80px;
+  display: block;
+  padding-bottom: 60px;
 }
 .message{
-    border: solid 1px #dcdcdc;
     font-size: 25px;
+    display:block;
+    padding:15px;
+}
+#recievedMessage{
+  background-color: #D94456;
+  color:white;
+  width:80%;
 }
 
-input[type="text"]{
+#sentMessage{
+  background-color: #9D9FA2;
+  /*float:right;*/
+  color:white;
+  display:block;
+  width: 80%;
+}
+.footer input[type="text"]{
   margin:0;
   width:95%;
   height:50px;
@@ -43,6 +63,8 @@ input[type="text"].focus {
   box-shadow: 0 0 5px 1px #969696;
 }
 .footer {
+  display: block;
+
     position: fixed;
     bottom: 0;
     width: 100%;
