@@ -10,9 +10,9 @@ var messages = []; // Array to store previous messages
 var newMessage = "";
 
 // Function to get the local ip addresses
-// require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-//   console.log('Server started on '+ add + ':' + port);
-// })
+require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+  console.log('Server started on '+ add + ':' + port);
+})
 
 // On client connection
 io.sockets.on('connection', function(socket){

@@ -7,48 +7,83 @@ body{
 }
 .header{
   width:100%;
-  background-color: #3169D1;
+  background-color: #D7DCE1;
   text-align: center;
   font-size: 40px;
-  color: #F2D435;
+  color: #425364;
   position:fixed;
 }
 
 #MessageBox{
   padding-top: 100px;
   /*width:100%;*/
-  padding-left: 80px;
-  padding-right: 80px;
+  /*padding-left: 80px;*/
+  /*padding-right: 80px;*/
   display: block;
   padding-bottom: 60px;
+  margin: auto;
+    width: 60%;
 }
-.message{
-    font-size: 25px;
+message_container{
+    width:100%;
     display:block;
-    padding:15px;
 }
-#recievedMessage{
-  background-color: #D94456;
-  color:white;
-  width:80%;
+.Message_sent{
+    /* float:left; */
+    /* width:40%; */
+    font-family:"Segoe UI";
+    max-width:100%;
+    display:block;
+
+}
+.message_title{
+    /* float:left; */
+    color:#D7DBE0;
+    padding-left:15px;
+}
+.message_body{
+    /* float:left; */
+    background-color:#D7DCE1;
+    border-radius:5px;
+    width:100%;
+    padding-left:10px;
+    padding-bottom:5px;
+    padding-top:5px;
+}
+.Message_recieved{
+    /* width:40%; */
+    font-family:"Segoe UI";
+    /*max-width:70%;*/
+    /* float:right; */
+    display:block;
+    /*padding-right:15px;*/
+}
+.message_title_recieved{
+
+    /* float:right; */
+    padding-right:15px;
+    padding-left:15px;
+    color:#D7DBE0;
+}
+.message_body_recieved{
+    background-color:#425364;
+    border-radius:5px;
+    width:100%;
+    padding-left:10px;
+    padding-bottom:5px;
+    padding-top:5px;
+    color:white;
+    float:left;
+
 }
 
-#sentMessage{
-  background-color: #9D9FA2;
-  /*float:right;*/
-  color:white;
-  display:block;
-  width: 80%;
-}
+
 .footer input[type="text"]{
   margin:0;
-  width:95%;
+  width:100%;
   height:50px;
 }
-input[type="button"]{
-  width:4%;
-  height:50px;
-}
+
 
 input[type="text"] {
   padding: 10px;
@@ -62,9 +97,9 @@ input[type="text"].focus {
   box-shadow: 0 0 5px 1px #969696;
 }
 .footer {
-  display: block;
-
-    position: fixed;
+    display: inline-block;
+    /*position: fixed;*/
     bottom: 0;
     width: 100%;
+    background-color: #D94456;
 }
