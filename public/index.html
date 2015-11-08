@@ -2,11 +2,22 @@
   <head>
     <title>Node Chat Room</title>
     <script src="socket.io/socket.io.js"></script>
+    <script src="scripts/jquery-1.11.3.min.js"></script>
+    <script src="scripts/javascript.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="header">
       Chat Room
+    </div>
+    <div class="login_container">
+    <center>
+        <h1>Welcome To this Node.js based chat room</h1>
+        <p>Enter A Username to use for this chat</p>
+        <input id="login_user" type="text"></input>
+        <br>
+        <input type="button" value="Enter Chat"></input>
+      </center>
     </div>
 
     <div id="MessageBox">
@@ -17,40 +28,42 @@
   </div>
 
     <script type="text/javascript">
-      var lastSent = ""; // Variable to store the last message sent
-      var txt = document.getElementById("sendMessage");
-      var recievedMessageLayoutBeginning = '<div class="message_container"><div class="Message_recieved"><div class="message_title_recieved">John</div><div class="message_body_recieved">';
-      var sentMessageLayoutBeginning = '<div class="message_container"><div class="Message_sent"><div class="message_title">Mohamed</div><div class="message_body">'
-      var messageEnding = '</div></div></div>'
-      // Send the message in the event the enter button is clicked
-      txt.addEventListener("keypress", function() {
-        if (event.keyCode == 13) sendMessage();
+    var lastSent = ""; // Variable to store the last message sent
+    var userName = "";
+    var txt = document.getElementById("sendMessage");
+
+    var recievedMessageLayoutBeginning = '<div class="message_container"><div class="Message_recieved"><div class="message_title_recieved">John</div><div class="message_body_recieved">';
+    var sentMessageLayoutBeginning = '<div class="message_container"><div class="Message_sent"><div class="message_title">Mohamed</div><div class="message_body">'
+    var messageEnding = '</div></div></div>'
+    // Send the message in the event the enter button is clicked
+    txt.addEventListener("keypress", function() {
+      if (event.keyCode == 13) sendMessage();
+    });
+
+
+      var socket = io.connect(); // Connect to the socket client
+      var tempMessage = ""; // Variable to store the value of the message recieved
+
+      // When a message is recieved
+      socket.on('message', function(data){
+        console.log("Message Recieved" + data.value);
+        tempMessage = data.value;
+        // Check if the last message recieved was sent by you or not
+        // In order to prevent duplicate messages appearing
+        if(tempMessage != lastSent){
+          // Add the new message to the screen
+          document.getElementById("MessageBox").innerHTML =
+          document.getElementById("MessageBox").innerHTML + recievedMessageLayoutBeginning + tempMessage + messageEnding;
+        }
       });
 
+      function sendMessage(){
+        sendingMessage = document.getElementById('sendMessage').value;
+        document.getElementById("MessageBox").innerHTML = document.getElementById("MessageBox").innerHTML + sentMessageLayoutBeginning + document.getElementById('sendMessage').value + '</div>';
+        lastSent = sendingMessage;
+        socket.emit('message', {value: document.getElementById('sendMessage').value});
+        document.getElementById('sendMessage').value = "";
 
-    		var socket = io.connect(); // Connect to the socket client
-        var tempMessage = ""; // Variable to store the value of the message recieved
-
-        // When a message is recieved
-        socket.on('message', function(data){
-          console.log("Message Recieved" + data.value);
-          tempMessage = data.value;
-          // Check if the last message recieved was sent by you or not
-          // In order to prevent duplicate messages appearing
-          if(tempMessage != lastSent){
-            // Add the new message to the screen
-            document.getElementById("MessageBox").innerHTML =
-            document.getElementById("MessageBox").innerHTML + recievedMessageLayoutBeginning + tempMessage + messageEnding;
-          }
-        });
-
-        function sendMessage(){
-          sendingMessage = document.getElementById('sendMessage').value;
-          document.getElementById("MessageBox").innerHTML = document.getElementById("MessageBox").innerHTML + sentMessageLayoutBeginning + document.getElementById('sendMessage').value + '</div>';
-          lastSent = sendingMessage;
-          socket.emit('message', {value: document.getElementById('sendMessage').value});
-          document.getElementById('sendMessage').value = "";
-
-        }
+      }
     </script>
   </body>
