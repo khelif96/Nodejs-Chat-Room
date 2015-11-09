@@ -66,6 +66,8 @@
         // Check if the last message recieved was sent by you or not
         // In order to prevent duplicate messages appearing
         if((tempMessage != lastSent) && (tempUser != userName)){
+          var audio = new Audio('media/notification.mp3');
+          audio.play();
           // Add the new message to the screen
           document.getElementById("MessageBox").innerHTML =
           document.getElementById("MessageBox").innerHTML + recievedMessageLayoutPartA + tempUser + recievedMessageLayoutPartB + tempMessage + messageEnding;
