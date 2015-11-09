@@ -42,7 +42,7 @@ body{
   margin: auto;
     width: 60%;
 }
-message_container{
+.message_container{
     width:100%;
     display:block;
 }
