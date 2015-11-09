@@ -24,12 +24,15 @@ io.sockets.on('connection', function(socket){
   }
 
 // When a message is recieved
-  socket.on('message', function(data){
+  socket.on('message', function(data,userName){
+    console.log("Message Recieved from " + userName.value);
     newMessage = data.value;
+    newUserName = userName.value;
+
     // var buf = new Buffer(1);
     // buf.writeUInt8(newMessage,0);
     messages.push(newMessage); // Add the message to the messages array
-    io.sockets.emit('message', {value: newMessage}); // Send the message to all the other clients
+    io.sockets.emit('message', {value: newMessage},{value: newUserName}); // Send the message to all the other clients
 
   })
 

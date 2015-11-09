@@ -116,7 +116,7 @@ input[type="text"].focus {
 }
 .footer {
     display: inline-block;
-    /*position: fixed;*/
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: #D94456;

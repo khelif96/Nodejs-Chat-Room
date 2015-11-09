@@ -16,7 +16,7 @@
         <p>Enter A Username to use for this chat</p>
         <input id="login_user" type="text"></input>
         <br>
-        <input type="button" value="Enter Chat"></input>
+        <input type="button" value="Enter Chat" onclick="saveUser()"></input>
       </center>
     </div>
 
@@ -31,38 +31,53 @@
     var lastSent = ""; // Variable to store the last message sent
     var userName = "";
     var txt = document.getElementById("sendMessage");
-
-    var recievedMessageLayoutBeginning = '<div class="message_container"><div class="Message_recieved"><div class="message_title_recieved">John</div><div class="message_body_recieved">';
-    var sentMessageLayoutBeginning = '<div class="message_container"><div class="Message_sent"><div class="message_title">Mohamed</div><div class="message_body">'
-    var messageEnding = '</div></div></div>'
+    // Message Layouts
+    // Sent Messages
+    sentMessageLayoutPartA = '<div class="message_container"><div class="Message_sent"><div class="message_title">';
+    sentMessageLayoutPartB = '</div><div class="message_body">';
+    // Recieved Messages
+    recievedMessageLayoutPartA = '<div class="message_container"><div class="Message_recieved"><div class="message_title_recieved">';
+    recievedMessageLayoutPartB = '</div><div class="message_body_recieved">';
+    // Endings
+    messageEnding = '</div></div></div>';
 
     // Send the message in the event the enter button is clicked
     txt.addEventListener("keypress", function() {
       if (event.keyCode == 13) sendMessage();
     });
 
+    function saveUser(){
+      userName = document.getElementById("login_user").value;
+      $(".login_container").slideUp(800)
+      $("#MessageBox").slideDown(0)
+      $(".footer").slideDown(800)
+    }
 
       var socket = io.connect(); // Connect to the socket client
-      var tempMessage = ""; // Variable to store the value of the message recieved
+      console.log("Connected to Server")
+      tempMessage = ""; // Variable to store the value of the message recieved
+
 
       // When a message is recieved
-      socket.on('message', function(data){
-        console.log("Message Recieved" + data.value);
+      socket.on('message', function(data,ruserName){
+        // console.log("Message Recieved from " + userName.value + "Content is " + data.value);
         tempMessage = data.value;
+        tempUser = ruserName.value;
         // Check if the last message recieved was sent by you or not
         // In order to prevent duplicate messages appearing
-        if(tempMessage != lastSent){
+        if((tempMessage != lastSent) && (tempUser != userName)){
           // Add the new message to the screen
           document.getElementById("MessageBox").innerHTML =
-          document.getElementById("MessageBox").innerHTML + recievedMessageLayoutBeginning + tempMessage + messageEnding;
+          document.getElementById("MessageBox").innerHTML + recievedMessageLayoutPartA + tempUser + recievedMessageLayoutPartB + tempMessage + messageEnding;
         }
       });
 
       function sendMessage(){
         sendingMessage = document.getElementById('sendMessage').value;
-        document.getElementById("MessageBox").innerHTML = document.getElementById("MessageBox").innerHTML + sentMessageLayoutBeginning + document.getElementById('sendMessage').value + '</div>';
+        document.getElementById("MessageBox").innerHTML = document.getElementById("MessageBox").innerHTML + sentMessageLayoutPartA + userName + sentMessageLayoutPartB + sendingMessage + messageEnding;
         lastSent = sendingMessage;
-        socket.emit('message', {value: document.getElementById('sendMessage').value});
+        socket.emit('message', {value: document.getElementById('sendMessage').value},{value: document.getElementById('login_user').value});
+        console.log("Message Sent User is " + userName + ", Message Content is " + sendingMessage);
         document.getElementById('sendMessage').value = "";
 
       }
